@@ -3,7 +3,7 @@ const USER = require("../models/userSchema");
 
 const signup = async (req, res) => {
     try {
-        const { username, email, password, role } = req.body;
+        const { firstName, lastName, email, password } = req.body;
 
         const existingUser = await USER.findOne({ email });
         if (existingUser) {
@@ -13,7 +13,8 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new USER({
-            username,
+            firstName,
+            lastName,
             email,
             password: hashedPassword,
             role,
