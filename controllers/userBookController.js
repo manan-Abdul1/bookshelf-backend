@@ -48,4 +48,17 @@ const updateUserBookStatus = async (req, res) => {
     }
 };
 
-module.exports = { addBookToShelf, updateUserBookStatus };
+const getAllUserBooks = async (req, res) => {
+    try {
+      const userId = req.params.userId;
+  
+      const userBooks = await UserBook.find({ userId });
+  
+      res.status(200).json(userBooks);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports = { addBookToShelf, updateUserBookStatus, getAllUserBooks };
