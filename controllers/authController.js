@@ -7,7 +7,7 @@ const signup = async (req, res) => {
 
         const existingUser = await USER.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: "User already exists" });
+            return res.status(400).json({ message: "User already exists", ok: false });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -21,10 +21,10 @@ const signup = async (req, res) => {
 
         await newUser.save();
 
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({ message: "User registered successfully", ok: true });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Internal server error", ok: false });
     }
 };
 
@@ -50,13 +50,14 @@ const login = async (req, res) => {
         res
             .status(200)
             .json({
+                ok: true,
                 id: user._id,
                 username: user.username,
                 message: "Login successful",
             });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: "Something went wrong", ok:false });
     }
 };
 
