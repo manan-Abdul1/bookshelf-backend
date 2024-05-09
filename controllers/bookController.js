@@ -43,4 +43,22 @@ const getAllBooks = async (req, res) => {
     }
 };
 
-module.exports = { createBook, getAllBooks }
+// Controller to get a book by ID
+const getBookById = async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        
+        const book = await Book.findById(bookId);
+
+        if (!book) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+
+        res.status(200).json(book);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports = { createBook, getAllBooks, getBookById }
