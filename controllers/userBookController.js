@@ -13,8 +13,7 @@ const addBookToShelf = async (req, res) => {
 
         await newUserBook.save();
 
-        res
-            .status(201)
+        res.status(201)
             .json({
                 message: "Book added to shelf successfully",
                 newUserBook,
