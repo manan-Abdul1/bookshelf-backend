@@ -61,4 +61,21 @@ const getAllUserBooks = async (req, res) => {
     }
 };
 
-module.exports = { addBookToShelf, updateUserBookStatus, getAllUserBooks };
+const deleteAllUsersBook = async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      const deletedUserBooks = await UserBook.deleteMany({ userId });
+  
+      if (deletedUserBooks.deletedCount === 0) {
+        return res.status(404).json({ message: 'User book entries not found' });
+      }
+  
+      res.status(200).json({ message: 'All user book entries deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports = { addBookToShelf, updateUserBookStatus, getAllUserBooks, deleteAllUsersBook };
