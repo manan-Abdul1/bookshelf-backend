@@ -32,4 +32,15 @@ const createBook = async (req, res) => {
     }
 };
 
-module.exports = { createBook }
+// Controller to get all books
+const getAllBooks = async (req, res) => {
+    try {
+        const books = await Book.find();
+        res.status(200).json(books);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports = { createBook, getAllBooks }
