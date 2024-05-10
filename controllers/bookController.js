@@ -10,6 +10,8 @@ const createBook = async (req, res) => {
             publicationDate,
             genre,
             publicationYear,
+            imageUrl,
+            userId
         } = req.body;
 
         const newBook = new Book({
@@ -18,6 +20,7 @@ const createBook = async (req, res) => {
             publicationHouse,
             publicationDate,
             genre,
+            imageUrl,
             publicationYear,
         });
 
