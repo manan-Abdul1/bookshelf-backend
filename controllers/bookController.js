@@ -1,4 +1,5 @@
 const Book = require("../models/bookSchema");
+const UserBook = require("../models/userBookSchema");
 
 // Controller to create a new book
 const createBook = async (req, res) => {
@@ -26,6 +27,13 @@ const createBook = async (req, res) => {
 
         await newBook.save();
 
+        const newUserBook = new UserBook({
+            userId,
+            bookId: newBook._id
+        });
+
+        // Save the new user book entry
+        await newUserBook.save();
         res
             .status(201)
             .json({ message: "Book created successfully", book: newBook });
