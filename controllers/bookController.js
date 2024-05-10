@@ -12,7 +12,7 @@ const createBook = async (req, res) => {
             genre,
             publicationYear,
             imageUrl,
-            userId
+            userId,
         } = req.body;
 
         const newBook = new Book({
@@ -29,17 +29,17 @@ const createBook = async (req, res) => {
 
         const newUserBook = new UserBook({
             userId,
-            bookId: newBook._id
+            bookId: newBook._id,
         });
 
         // Save the new user book entry
         await newUserBook.save();
         res
             .status(201)
-            .json({ message: "Book created successfully", book: newBook });
+            .json({ ok: true, message: "Book created successfully", book: newBook });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ ok: false, message: "Internal server error" });
     }
 };
 
@@ -47,10 +47,10 @@ const createBook = async (req, res) => {
 const getAllBooks = async (req, res) => {
     try {
         const books = await Book.find();
-        res.status(200).json(books);
+        res.status(200).json({ books, ok: true });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ ok: false, message: "Internal server error" });
     }
 };
 
@@ -58,17 +58,17 @@ const getAllBooks = async (req, res) => {
 const getBookById = async (req, res) => {
     try {
         const bookId = req.params.id;
-        
+
         const book = await Book.findById(bookId);
 
         if (!book) {
-            return res.status(404).json({ message: 'Book not found' });
+            return res.status(404).json({ message: "Book not found" });
         }
 
         res.status(200).json(book);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ ok: false, message: "Internal server error" });
     }
 };
 
@@ -80,14 +80,20 @@ const deleteBook = async (req, res) => {
         const deletedBook = await Book.findByIdAndDelete(bookId);
 
         if (!deletedBook) {
-            return res.status(404).json({ message: 'Book not found' });
+            return res.status(404).json({ ok: false, message: "Book not found" });
         }
 
-        res.status(200).json({ message: 'Book deleted successfully', book: deletedBook });
+        res
+            .status(200)
+            .json({
+                ok: true,
+                message: "Book deleted successfully",
+                book: deletedBook,
+            });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ ok: false, message: "Internal server error" });
     }
 };
 
-module.exports = { createBook, getAllBooks, getBookById, deleteBook }
+module.exports = { createBook, getAllBooks, getBookById, deleteBook };
