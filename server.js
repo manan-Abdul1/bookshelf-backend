@@ -6,6 +6,7 @@ const dbconfig = require('./connection/db');
 const authRoutes = require('./routes/authRoutes');
 const genreRoutes = require('./routes/genreRoutes');
 const bookRoutes = require('./routes/bookRoutes');
+const userBookRoutes = require('./routes/userBookRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/genre', genreRoutes);
 app.use('/api/book', bookRoutes);
+app.use('/api/userBook', userBookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
