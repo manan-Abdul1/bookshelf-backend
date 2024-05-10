@@ -11,11 +11,6 @@ const UserBookSchema = new mongoose.Schema({
     ref: 'Book',
     required: true
   },
-  shelf: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Shelf',
-    required: true
-  },
   status: {
     type: String,
     enum: ['Reading', 'Completed', 'PlanToRead'],
