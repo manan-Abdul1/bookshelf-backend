@@ -52,7 +52,9 @@ const login = async (req, res) => {
             .json({
                 ok: true,
                 id: user._id,
-                username: user.username,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 message: "Login successful",
             });
     } catch (error) {
