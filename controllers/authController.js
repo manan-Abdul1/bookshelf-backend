@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const USER = require("../models/userSchema");
+const { createAuthorizationToken } = require("../middleware/authMiddleware");
 
 const signup = async (req, res) => {
     try {
@@ -46,6 +47,7 @@ const login = async (req, res) => {
                 .status(401)
                 .json({ message: "Enter the correct password", ok: false });
         }
+        const token = createAuthorizationToken(user);
 
         res
             .status(200)
@@ -55,6 +57,7 @@ const login = async (req, res) => {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                token,
                 message: "Login successful",
             });
     } catch (error) {
