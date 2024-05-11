@@ -31,20 +31,26 @@ const updateUserBookStatus = async (req, res) => {
     try {
         const { status, userId, bookId } = req.body;
 
-        const userBook = await UserBook.findOneAndUpdate(
+        const userBook = await UserBook.findOne({ userId, bookId });
+
+        if (!userBook) {
+            return res.status(404).json({ ok: false, message: "User book entry not found" });
+        }
+
+        if (userBook.status === status) {
+            return res.status(200).json({ ok: false, message: "Status is already updated" });
+        }
+
+        const updatedUserBook = await UserBook.findOneAndUpdate(
             { userId, bookId },
             { status },
             { new: true }
         );
 
-        if (!userBook) {
-            return res.status(404).json({ message: "User book entry not found" });
-        }
-
-        res.status(200).json(userBook);
+        res.status(200).json({ ok: true, userBook: updatedUserBook });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ ok: false, message: "Internal server error" });
     }
 };
 
