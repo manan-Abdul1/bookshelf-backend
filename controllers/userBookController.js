@@ -76,13 +76,13 @@ const deleteAllUsersBook = async (req, res) => {
       const deletedUserBooks = await UserBook.deleteMany({ userId });
   
       if (deletedUserBooks.deletedCount === 0) {
-        return res.status(404).json({ message: 'User book entries not found' });
+        return res.status(404).json({ ok: false, message: 'User book entries not found' });
       }
   
-      res.status(200).json({ message: 'All user book entries deleted successfully' });
+      res.status(200).json({ ok: true, message: 'All user book entries deleted successfully' });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ok: false, message: 'Internal server error' });
     }
 };
 
