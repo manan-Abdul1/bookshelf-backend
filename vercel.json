@@ -17,11 +17,6 @@
           }
         ]
       }
-    ],
-    "routes": [
-        { "handle": "filesystem" },
-        { "src": "/api/(.*)", "dest": "pages/api/$1" },
-        { "src": "/(.*)", "dest": "$1" }
-      ]
+    ]
 }
   
