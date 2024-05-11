@@ -10,7 +10,7 @@ const userBookRoutes = require('./routes/userBookRoutes');
 
 const app = express();
 const corsOptions = {
-  origin: ['http://localhost:3000'], // Add your frontend URLs here
+  origin: '*', // Add your frontend URLs here
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
   optionsSuccessStatus: 200, // HTTP status code to respond with for successful OPTIONS requests
