@@ -52,8 +52,10 @@ const getAllUserBooks = async (req, res) => {
     try {
       const userId = req.params.userId;
   
-      const userBooks = await UserBook.find({ userId });
-  
+     const userBooks = await UserBook.find({ userId }).populate({
+            path: 'bookId',
+            populate: { path: 'genre' } 
+        });  
       res.status(200).json(userBooks);
     } catch (error) {
       console.error(error);
