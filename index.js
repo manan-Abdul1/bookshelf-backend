@@ -9,14 +9,8 @@ const bookRoutes = require('./routes/bookRoutes');
 const userBookRoutes = require('./routes/userBookRoutes');
 
 const app = express();
-const corsOptions = {
-  origin: '*', // Add your frontend URLs here
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-  optionsSuccessStatus: 200, // HTTP status code to respond with for successful OPTIONS requests
-};
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/genre', genreRoutes);
